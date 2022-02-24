@@ -16,6 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -29,7 +30,7 @@ import javax.swing.JMenuBar;
 public class Window {
 
 	private JFrame frmGpMan;
-	Player playerGUI = new Player();
+	Player playerGUI; 
 	private JTable table;
 
 
@@ -118,7 +119,13 @@ public class Window {
 		JButton btnNewButton = new JButton("Edit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				playerGUI.setVisible(true);
+				try {
+					playerGUI = new Player();
+					playerGUI.setVisible(true);
+				} catch (ClassNotFoundException | SQLException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnNewButton.setBounds(435, 327, 89, 23);

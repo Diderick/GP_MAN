@@ -35,9 +35,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 
-
 public class Player extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField bsaNumberTxtField;
 	private JTextField nameTxtField;
@@ -49,24 +52,20 @@ public class Player extends JDialog {
 	private JTextField roleTextField;
 	private JTextField raceTxtField;
 	private JComboBox<String> comboBoxGender;
-	static Player dialog; 
-	private JTable table;
+	static Player dialog;
 	int deletePlayer_Id;
-	static ArrayList<String> playerSearch= new ArrayList<String>();
+	static ArrayList<String> playerSearch = new ArrayList<String>();
 	static ArrayList<String> tableData = new ArrayList<String>();
 	JButton btnNewButton_5;
-	
+
 	public void setPlayer_Id(String playerIdString) {
 		deletePlayer_Id = Integer.valueOf(playerIdString);
 	}
-	
+
 	public int getPlayer_Id() {
 		return deletePlayer_Id;
 	}
 
-	
-
-	
 	public void clearFields() {
 		bsaNumberTxtField.setText(null);
 		nameTxtField.setText(null);
@@ -79,82 +78,76 @@ public class Player extends JDialog {
 		raceTxtField.setText(null);
 		comboBoxGender.setSelectedIndex(0);
 	}
-	
+
 	public static void loadTableData() throws ClassNotFoundException, SQLException, IOException {
 		tableData = MakeDB.populateTable();
 	}
-	
+
 	public static void loadPlayerData() throws ClassNotFoundException, SQLException, IOException {
 		playerSearch = MakeDB.getPlayerData();
 	}
-	
+
 	public void calculateAge() {
-		if(idNumTextField.getText().length() == 13){
+		if (idNumTextField.getText().length() == 13) {
 			Date myDate = new Date();
 			int year = myDate.getYear() + 1900;
-			int nextYear = myDate.getYear()+1901-2000;
-			int month = myDate.getMonth()+1;
+			int nextYear = myDate.getYear() + 1901 - 2000;
+			int month = myDate.getMonth() + 1;
 			int ageNumber;
 			String age;
 			String idNum = idNumTextField.getText();
 			String yearBornString = idNum.substring(0, 2);
 			String monthBornString = idNum.substring(3, 4);
-			String dayBornString = idNum.substring(5, 6);
+			idNum.substring(5, 6);
 			String genderCalc = idNum.substring(6, 7);
 			int genderCalcInt = Integer.valueOf(genderCalc);
 			int yearBorn = Integer.valueOf(yearBornString);
 			int monthBorn = (Integer.valueOf(monthBornString));
-			 
-			if(yearBorn >= nextYear) {
+
+			if (yearBorn >= nextYear) {
 				yearBorn = yearBorn + 1900;
-				
-				if(month < monthBorn) {
+
+				if (month < monthBorn) {
 					ageNumber = year - yearBorn - 1;
 					age = String.valueOf(ageNumber);
 					ageTxtField.setText(age);
-				}
-				else if(month == monthBorn) {
+				} else if (month == monthBorn) {
+					ageNumber = year - yearBorn;
+					age = String.valueOf(ageNumber);
+					ageTxtField.setText(age);
+				} else {
 					ageNumber = year - yearBorn;
 					age = String.valueOf(ageNumber);
 					ageTxtField.setText(age);
 				}
-				else {
-					ageNumber = year - yearBorn;
-					age = String.valueOf(ageNumber);
-					ageTxtField.setText(age);
-				}
-			}
-			else {
+			} else {
 				yearBorn = yearBorn + 2000;
-				
-				if(month < monthBorn) {
+
+				if (month < monthBorn) {
 					ageNumber = year - yearBorn - 1;
 					age = String.valueOf(ageNumber);
 					ageTxtField.setText(age);
-				}
-				else if(month == monthBorn) {
+				} else if (month == monthBorn) {
 					ageNumber = year - yearBorn;
 					age = String.valueOf(ageNumber);
 					ageTxtField.setText(age);
-				}
-				else {
+				} else {
 					ageNumber = year - yearBorn;
 					age = String.valueOf(ageNumber);
 					ageTxtField.setText(age);
 				}
 			}
-			
-			if(genderCalcInt < 5) {
+
+			if (genderCalcInt < 5) {
 				comboBoxGender.setSelectedIndex(2);
-			} else if(genderCalcInt >= 5) {
+			} else if (genderCalcInt >= 5) {
 				comboBoxGender.setSelectedIndex(1);
 			}
 
-			} else
-				JOptionPane.showMessageDialog(null, "Please enter a 13 digit id number", "Error", JOptionPane.OK_OPTION);	
-		
+		} else
+			JOptionPane.showMessageDialog(null, "Please enter a 13 digit id number", "Error", JOptionPane.OK_OPTION);
+
 	};
-		
 
 	/**
 	 * Launch the application.
@@ -164,19 +157,18 @@ public class Player extends JDialog {
 			dialog = new Player();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
-		
-
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Create the dialog.
-	 * @throws IOException 
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
+	 * 
+	 * @throws IOException
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
 	 */
 	public Player() throws ClassNotFoundException, SQLException, IOException {
 		try {
@@ -191,7 +183,7 @@ public class Player extends JDialog {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		
+
 		setType(Type.POPUP);
 		setTitle("Player");
 		setBounds(100, 100, 593, 759);
@@ -199,10 +191,11 @@ public class Player extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{46, 0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{33, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 46, 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 33, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+				1.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 		JLabel lblNewLabel = new JLabel("BSA Number:");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -226,7 +219,7 @@ public class Player extends JDialog {
 			btnNewButton_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					System.out.println("Playe Search" + playerSearch.get(1));
-					//TODO CHECK HIGHEST BSA NUMBER ADD ONE AND ISSUE NEW Number
+					// TODO CHECK HIGHEST BSA NUMBER ADD ONE AND ISSUE NEW Number
 					int BSA;
 					BSA = MakeDB.getHighestValue();
 					System.out.println(BSA);
@@ -236,7 +229,7 @@ public class Player extends JDialog {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
+
 				}
 			});
 			GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
@@ -341,40 +334,36 @@ public class Player extends JDialog {
 				public void actionPerformed(ActionEvent e) {
 					btnNewButton_5.setEnabled(true);
 
-					
-					if(searchComboBox.getSelectedIndex() == 0) {
-						
+					if (searchComboBox.getSelectedIndex() == 0) {
+
 					} else if (searchComboBox.getSelectedIndex() == 1) { // BSA Number selected
 						String searchBSA = bsaNumberTxtField.getText();
-							if(playerSearch.contains(searchBSA)){
-								
-								int index = playerSearch.indexOf(searchBSA);
-								int idToDelete = index-1;
-								setPlayer_Id(playerSearch.get(idToDelete));
-								System.out.print("index = " + getPlayer_Id());
-								nameTxtField.setText(playerSearch.get(index + 1));	
-								surnameTxtField.setText(playerSearch.get(index + 2));
-								idNumTextField.setText(playerSearch.get(index + 3));
-								calculateAge();
-								
-							//	provinceTxtField.setText(playerSearch.get(index + 1));
-							//	clubTxtField.setText(playerSearch.get(index + 1));
-							//	roleTextField.setText(playerSearch.get(index + 1));
-							//	raceTxtField.setText(playerSearch.get(index + 1));
-								
+						if (playerSearch.contains(searchBSA)) {
+
+							int index = playerSearch.indexOf(searchBSA);
+							int idToDelete = index - 1;
+							setPlayer_Id(playerSearch.get(idToDelete));
+							System.out.print("index = " + getPlayer_Id());
+							nameTxtField.setText(playerSearch.get(index + 1));
+							surnameTxtField.setText(playerSearch.get(index + 2));
+							idNumTextField.setText(playerSearch.get(index + 3));
+							calculateAge();
+
+							// provinceTxtField.setText(playerSearch.get(index + 1));
+							// clubTxtField.setText(playerSearch.get(index + 1));
+							// roleTextField.setText(playerSearch.get(index + 1));
+							// raceTxtField.setText(playerSearch.get(index + 1));
+
 						}
-	
+
 					} else if (searchComboBox.getSelectedIndex() == 2) { // Player name selected
 						String playerName = nameTxtField.getText();
-						if(playerSearch.contains(playerName)){
-							
+						if (playerSearch.contains(playerName)) {
+
 							int index = playerSearch.indexOf(playerName);
 
-							
 							System.out.println("Hello from " + index);
 
-							
-							
 						}
 						try {
 							loadPlayerData();
@@ -383,23 +372,18 @@ public class Player extends JDialog {
 							e1.printStackTrace();
 						}
 
-					
-						
 					} else if (searchComboBox.getSelectedIndex() == 3) { // Player surname selected
-						String playerSurname = surnameTxtField.getText();
-						
-					} else if (searchComboBox.getSelectedIndex() == 4) { // Player id number selected
-						String playerId = idNumTextField.getText();
+						surnameTxtField.getText();
 
-						
+					} else if (searchComboBox.getSelectedIndex() == 4) { // Player id number selected
+						idNumTextField.getText();
+
 					}
-					
-				
+
 				}
-				
 
 			});
-			
+
 			GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
 			gbc_btnNewButton_2.fill = GridBagConstraints.HORIZONTAL;
 			gbc_btnNewButton_2.insets = new Insets(0, 0, 5, 5);
@@ -554,75 +538,45 @@ public class Player extends JDialog {
 			gbc_scrollPane.gridy = 12;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			{
-				
-				
+
 				loadTableData();
 
 				final DefaultTableModel model = new DefaultTableModel();
-				
 
 				Vector<String> rowData = new Vector<String>();
 
-				
-				int rowsTotal = tableData.size();
-				
-				
+				tableData.size();
 
-					for(int j = 0; j< tableData.size()/4; j++) {
-						rowData = new Vector<String>();
+				for (int j = 0; j < tableData.size() / 4; j++) {
+					rowData = new Vector<String>();
 
-						
-						for (int i = 0; i < tableData.size(); i++) {
-							
-						    rowData.insertElementAt(tableData.get(i), i);
+					for (int i = 0; i < tableData.size(); i++) {
 
-						
-						
+						rowData.insertElementAt(tableData.get(i), i);
+
 					}
-					    System.out.println(rowData);
-
-
-				
+					System.out.println(rowData);
 
 				}
-					model.addRow(rowData);
+				model.addRow(rowData);
 
-				
-				   
 				model.addColumn("BSA Number");
 				model.addColumn("Name");
 				model.addColumn("Surname");
 				model.addColumn("ID Number");
-				
-				
+
 				JTable table = new JTable(model);
 
+				System.out.print("ROW DATA" + rowData);
 
-		
-
-
-				System.out.print("ROW DATA" +rowData);
-
-					
-				
-				
-
-				
-			
-	
-				
-				
 				/*
-				table.setModel(new DefaultTableModel(
-					new Object[][] {
-						{bsaNumber, name, surname, idNumber},
-						
-					},
-					new String[] {
-						"BSA Number", "Name", "Surname", "ID Number"
-					}
-					
-				));*/
+				 * table.setModel(new DefaultTableModel( new Object[][] { {bsaNumber, name,
+				 * surname, idNumber},
+				 * 
+				 * }, new String[] { "BSA Number", "Name", "Surname", "ID Number" }
+				 * 
+				 * ));
+				 */
 				scrollPane.setViewportView(table);
 			}
 		}
@@ -673,11 +627,11 @@ public class Player extends JDialog {
 					buttonPane.add(btnNewButton);
 					btnNewButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							
+
 							Date currentDate = new Date();
 							int year = currentDate.getYear();
-							System.out.print(year+1900);
-							
+							System.out.print(year + 1900);
+
 							System.out.print(rootPaneCheckingEnabled);
 							String bsaNumber = bsaNumberTxtField.getText();
 							String playerName = nameTxtField.getText();
@@ -689,15 +643,15 @@ public class Player extends JDialog {
 							String playerRole = roleTextField.getText();
 							String playerRace = raceTxtField.getText();
 							String playerGender;
-	
-							if(comboBoxGender.getSelectedIndex() == 0) {
+
+							if (comboBoxGender.getSelectedIndex() == 0) {
 								playerGender = "Not selected";
-							}
-							else 
+							} else
 								playerGender = comboBoxGender.getItemAt(comboBoxGender.getSelectedIndex());
-							
+
 							try {
-								MakeDB.insertData(bsaNumber, playerName, playerSurname, playerIdNumber, playerAge, playerProvince, playerClub, playerRole, playerRace, playerGender);
+								MakeDB.insertData(bsaNumber, playerName, playerSurname, playerIdNumber, playerAge,
+										playerProvince, playerClub, playerRole, playerRace, playerGender);
 								clearFields();
 							} catch (ClassNotFoundException e1) {
 								// TODO Auto-generated catch block
@@ -709,7 +663,7 @@ public class Player extends JDialog {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							
+
 							try {
 								loadPlayerData();
 							} catch (ClassNotFoundException e1) {
@@ -723,9 +677,7 @@ public class Player extends JDialog {
 								e1.printStackTrace();
 							}
 						}
-	
-						
-						
+
 					});
 				}
 			}
@@ -733,5 +685,3 @@ public class Player extends JDialog {
 	}
 
 }
-
-	
